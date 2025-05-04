@@ -46,3 +46,9 @@ logHello();
        
        В той же час, функції, оголошені через expression, не підлягають hoisting і доступні тільки після їхнього присвоєння змінній.
 */
+
+const logHelloArrow = () => {
+  console.log("<- Hello world ->");
+};
+
+logHelloArrow();
