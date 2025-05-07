@@ -1,3 +1,4 @@
+//#region
 console.log(sum(1, 2));
 // Помилки не буде, тому що оголошення (декларація) функції піднімається (hoisting) на початок області видимості.
 // Це означає, що функція `sum` буде відома ще до виконання `console.log`, навіть якщо в коді вона оголошена нижче.
@@ -52,3 +53,47 @@ const logHelloArrow = () => {
 };
 
 logHelloArrow();
+//#endregion
+
+//#region Стрілочні функції
+
+const sayHello = () => {
+  console.log("Hello world from arrow func");
+};
+
+sayHello();
+
+// таку функцію не можна використовувати до її об'явлення, тому що це рахується як змінна яка просто вказує на функцію
+// а отже якщо це змінна то вона находиться в tdz при обробці скриптаб змінна туди потрапляє, але достукатись до неї не можна
+
+// стрілочні функція так як і expression функції, не мають доступа до arguments,
+// так само як і немає this, тобто дані функції не мають свого контексту, вони його успадковують з зовнішнього контексту
+
+// якщо стрілочна функція повертає значення одним рядком, то можна написати ось так:
+const divide = (a, b) => a / b; //можна не писати return
+console.log(divide(6, 2));
+console.log(divide); // в такому випадку просто отримуємо вміст функції
+console.log(sayHello);
+
+const actionFunc = (actionBefore, actionAfter) => {
+  actionBefore();
+  console.log("Action func");
+  actionAfter();
+};
+
+actionFunc(
+  () => console.log("actionBeforeeee"),
+  () => console.log("actionAfterrrr")
+);
+
+const validate = (hasAccess) => {
+  if (hasAccess) {
+    return () => console.log("access");
+  }
+
+  return () => console.log("not access");
+};
+
+validate(false)();
+
+//#endregion
