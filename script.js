@@ -1,163 +1,67 @@
 //#region
-
 {
-  const firstObject = {};
-  const secondObject = new Object();
+  // Об'єкт це силочний тип даних, саме тому коли ми хочемо порівняти два проекта, в нас буде false
 
-  const user = {
-    name: "Denys",
-    password: "denys123098",
-    "register date": 12,
-    sayHi: () => {
-      console.log("Hello world");
+  let obj1 = { name: "Denys" };
+  let obj2 = { name: "Denys" };
+  console.log(obj1 == obj2); //false
+
+  obj2 = obj1;
+  console.log(obj1 === obj2); // true // тепер obj2 зсилається на obj1
+
+  obj1.name = "newName";
+  console.log(obj2.name); // newName, ми через obj1 змінили obj2, тому що силка
+
+  const firstUser = {
+    name: "zoe",
+    age: 19,
+    addres: {
+      city: "Kiev",
+      street: "Довбуша",
     },
-    "second Say Hi": () => {
-      console.log("Hello world");
+  };
+
+  const secondUser = {
+    name: "zoe",
+    age: 19,
+    addres: {
+      city: "Kiev",
+      street: "Довбуша",
     },
   };
 
-  console.log(user["name"]);
-  console.log(user.name);
-  console.log(user["register date"]); // тільки так
-  user.sayHi();
-  user["second Say Hi"]();
-  console.log(user.sgsg); // undefined
-}
+  const areObjectsEqual = (user1, user2) => {
+    const keys1 = Object.keys(user1);
+    const keys2 = Object.keys(user2);
 
-//#endregion
+    // console.log("keys1: ", keys1);
+    // console.log("keys2: ", keys2);
 
-//#region
-{
-  const user = {};
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
 
-  user.name = "Denys Kifor";
-  user["is developer"] = true;
+    for (const key in user1) {
+      const value1 = user1[key];
+      const value2 = user2[key];
+      const areValueObject =
+        typeof value1 === "object" && typeof value2 === "object";
 
-  console.log(user);
+      if (areValueObject) {
+        return areObjectsEqual(value1, value2);
+      }
 
-  user.name = "Максим";
+      if (value1 !== value2) {
+        return false;
+      }
+    }
 
-  console.log(user);
-
-  delete user.name;
-  delete user["is developer"];
-
-  console.log(user);
-
-  // хоть ми й об'явили user як константу, міняти властивості ми можемо, а сам об'єкт ні. Помилка:
-  // user = {
-  //   name: "Денис",
-  // };
-
-  // console.log(user);
-}
-
-//#endregion
-
-//#region
-{
-  const myName = "Денис";
-  const age = 19;
-  {
-    const user = {
-      name: myName,
-      age: age,
-    };
-  }
-  // Такий запис можна скоротити до:
-  const user = {
-    myName,
-    age,
-  };
-  console.log(user);
-}
-//#endregion
-
-//#region
-{
-  const obj = {
-    123: "Example",
+    return true;
   };
 
-  console.log(obj["123"]);
-  console.log(obj[123]);
-  //console.log(obj.123); // error
-
-  const example = {
-    const: true,
-    let: false,
-  };
-
-  console.log(example.const);
-}
-//#endregion
-
-//#region
-{
-  //const propKey = prompt(
-  //"Придумайте свою властивість, наприклад: вік або ім'я"
-  //);
-  //const propValue = prompt("Тепер введіть значення цієї властивості");
-  //   const myObj = {
-  //     [propKey]: propValue,
-  //   };
-  //console.log(myObj);
-}
-//#endregion
-
-//#region
-{
-  const user = {
-    name: "Denys",
-    age: 19,
-  };
-
-  console.log("name" in user ? "name є" : "name нема");
-
-  const obj = {
-    [`value ${2 ** 3 - 0}`]: "ahahhaa",
-  };
-
-  console.log(obj);
-}
-//#endregion
-
-//#region
-{
-  const user = {
-    name: "Denys",
-    age: 19,
-    birthDay: "31.01.2006",
-  };
-
-  for (const key in user) {
-    console.log("Prop: ", key);
-  }
-
-  for (const value in user) {
-    console.log("Prop value: ", user[value]);
-  }
-
-  const nums = {
-    2: "Другий",
-    1: "Перший",
-    3: "Третій",
-  };
-
-  // вивід буде 1,2,3. Це пояснюється тим що перед ітерацією по масиві, об'єкт сортує елементи якщо це можливо, точніше якщо це числа
-  // Навіть якщо ми позначимо ключі як '2' '1' '3', відбудеться приведення до типу number
-  for (const num in nums) {
-    console.log(nums[num]);
-  }
-
-  const secondNums = {
-    name: "Denys",
-    2: "Другий",
-    1: "Перший",
-    3: "Третій",
-    age: 19,
-  };
-
-  console.log(secondNums); // В даному випадку посортується те що можна посортувати
+  console.log(
+    "user1 та user2 одинакові?: ",
+    areObjectsEqual(firstUser, secondUser)
+  );
 }
 //#endregion
